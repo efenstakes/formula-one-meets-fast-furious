@@ -6,7 +6,7 @@ import { useWindowWidth } from '@react-hook/window-size'
 
 // components
 import { FuriousDriverModel } from '@/components/furious_driver/component'
-import { RedCarModel } from '@/components/red_card/component'
+import { RedCarModel } from '@/components/red_car/component'
 import CanvasBackground from '../canvas_background/component'
 import CanvasLoader from '../canvas_loader/component'
 
