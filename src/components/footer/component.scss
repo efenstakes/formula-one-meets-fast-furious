@@ -1,0 +1,72 @@
+@import '../../app/globals.scss';
+
+
+
+
+.home_page__footer {
+    @include floating_element;
+    bottom: 2px;
+  
+  
+    // background-color: skyblue;
+    @media screen and (min-width: 1000px) {
+      bottom: 2vh;
+    }
+  }
+  
+  .home_page__footer_item {
+    display: flex;
+    justify-content: space-around;
+  
+    min-width: 60vw;
+  
+    padding: .5rem 1rem;
+    // background-color: white;
+    // border-radius: $BORDER_RADIUS_SM;
+  }
+  
+  .home_page__footer_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    width: 56px;
+    height: 56px;
+  
+    background-image: $LINEAR_BG;
+  
+    color: white;
+    border: 5px solid white;
+    border-radius: $BORDER_RADIUS_SM;
+  
+    font-size: 1.8rem;
+  
+    @media screen and (min-width: 1000px) {
+      width: 72px;
+      height: 72px;
+    }
+  }
+  
+  .home_page__side_nav {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    height: 100%;
+  
+    // width: 80px;
+  
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+  
+    // background-color: skyblue;
+    @media screen and (min-width: 1000px) {
+      right: 2vw;
+    }
+  }
+
+  
+  
