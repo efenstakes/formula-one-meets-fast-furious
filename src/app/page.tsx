@@ -1,95 +1,140 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import clsx from 'clsx'
+
+
+// components
+import FastFurious from '@/components/fast_furious/component'
+import FormulaOne from '@/components/formula_one/component'
+import Overlay from '@/components/overlay/component'
+import Footer from '@/components/footer/component'
+
+
+// styles
+import { containerVariants, itemVariants } from '@/styles/variants'
+import './page.scss'
+
 
 export default function Home() {
+  const [showCanvas, setShowCanvas] = useState(false)
+  const [isShowingFormulaOne, setIsShowingFormulaOne] = useState(true)
+
+  useEffect(()=> {
+    setTimeout(()=> setShowCanvas(true), 500)
+  }, [])
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div className='page home_page'>
+
+
+      {/* content */}
+      <motion.div
+        className="home_page__content_container"
+        variants={containerVariants}
+        initial="initial"
+        animate="animate"
+      >
+
+        {/* content */}
+        <motion.div
+          className="home_page__content"
+          variants={itemVariants}
+          initial="initial"
+          animate="animate"
+        >
+          {
+            showCanvas && isShowingFormulaOne &&
+              <FormulaOne />
+          }
+          {
+            showCanvas && !isShowingFormulaOne &&
+              <FastFurious />
+          }
+        </motion.div>
+
+
+        {/* appbar */}
+        <motion.div className="home_page__app_bar" variants={itemVariants}>
+          <motion.div variants={itemVariants} className='home_page__app_bar_item'>
+            Formula One Meets Fast & Furious
+          </motion.div>
+        </motion.div>
+
+        {/* footer */}
+        <Footer />
+      </motion.div>
+
+
+      {/* side nav */}
+      <div className="home_page__side_nav">
+        <motion.div
+          className='home_page__side_nav_items'
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+        >
+        
+          {/* selected if we are seeing furious */}
+          <SideNavItem
+            selected={!isShowingFormulaOne}
+            onClick={
+              ()=> setIsShowingFormulaOne(false)
+            }
+          />
+
+          {/* selected if we are seeing formula 1 */}
+          <SideNavItem
+            selected={isShowingFormulaOne}
+            onClick={
+              ()=> setIsShowingFormulaOne(true)
+            }
+          />
+          
+        </motion.div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* text content */}
+      {
+        isShowingFormulaOne && 
+          <Overlay
+            title='Formula 1'
+            text='The racing season is upon us and the thrill is on. I am ready now.'
+          />
+      }
+      {
+        !isShowingFormulaOne && 
+          <Overlay
+            title='Fast & Furious'
+            text='The whole clan is coming for my family but I have a message for them, I am ready now.'
+          />
+      }
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+    </div>
+  )
+}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+type SideNavItemType = {
+  selected: boolean
+  onClick: ()=> void
+}
+const SideNavItem = ({  selected, onClick }: SideNavItemType)=> {
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+  return (
+    <motion.div
+      variants={itemVariants}
+      className={
+        clsx([
+          'home_page__side_nav_item',
+          {
+            'home_page__side_nav_item__selected': selected,
+          }
+        ])
+      }
+      onClick={
+        ()=> onClick()
+      }
+    />
   )
 }
